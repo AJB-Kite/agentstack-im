@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentStack.im — OpenClaw Setup for Isle of Man Businesses</title>
+  <meta name="description" content="AgentStack.im sets up OpenClaw for Isle of Man businesses in 48 hours. Local machine or hosted VM setup with optional monthly support." />
+  <style>
+    :root {
+      --bg: #0a1020;
+      --bg-soft: #121a31;
+      --text: #eef3ff;
+      --muted: #b9c4e6;
+      --cyan: #00e5ff;
+      --violet: #7c4dff;
+      --lime: #b7ff3c;
+      --card: #151f3a;
+      --border: #26345f;
+      --danger: #ff6b81;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 500px at 15% -10%, rgba(124,77,255,.35), transparent),
+        radial-gradient(1000px 500px at 80% -20%, rgba(0,229,255,.25), transparent),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container { width: min(1120px, 92%); margin: 0 auto; }
+    .top { padding: 22px 0; }
+    .brand {
+      display: inline-flex; align-items: centre; gap: .6rem; font-weight: 800; letter-spacing: .2px;
+      font-size: 1.15rem;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 18px var(--lime); }
+    .hero { padding: 36px 0 28px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; }
+    .pill {
+      display: inline-block; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px;
+      color: var(--muted); font-size: .84rem; background: rgba(255,255,255,.02);
+    }
+    h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; margin: 14px 0; }
+    .gradient { background: linear-gradient(90deg, var(--cyan), #9ad7ff 40%, var(--lime)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: 1.08rem; color: var(--muted); max-width: 62ch; }
+    .cta { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 12px 18px; border-radius: 12px; border: 1px solid transparent;
+      text-decoration: none; font-weight: 700; cursor: pointer;
+    }
+    .btn-primary { background: var(--cyan); color: #04111a; }
+    .btn-secondary { border-color: var(--border); color: var(--text); background: rgba(255,255,255,.02); }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(124,77,255,.16), rgba(0,229,255,.07));
+      border: 1px solid var(--border); border-radius: 18px; padding: 18px;
+    }
+    .hero-card h3 { margin: 0 0 10px; }
+    .checks { list-style: none; padding: 0; margin: 0; }
+    .checks li { margin: 8px 0; color: var(--muted); }
+    .checks li::before { content: "✓"; color: var(--lime); margin-right: 8px; font-weight: 700; }
+
+    .trust {
+      margin: 14px 0 26px; border: 1px solid var(--border); border-radius: 14px; padding: 10px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: rgba(255,255,255,.02);
+    }
+    .trust div { text-align: centre; font-size: .9rem; color: var(--muted); }
+
+    section { padding: 28px 0; }
+    h2 { margin: 0 0 10px; font-size: 1.6rem; }
+    .sub { color: var(--muted); margin-top: 0; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .num { font-weight: 800; color: var(--cyan); font-size: 1.1rem; }
+
+    .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .price { font-size: 1.8rem; font-weight: 800; margin: 6px 0 10px; }
+    .tag { font-size: .8rem; color: #021b1d; background: var(--lime); border-radius: 999px; padding: 3px 8px; font-weight: 700; }
+
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    form { display: grid; gap: 10px; }
+    label { font-size: .92rem; color: var(--muted); }
+    input, select, textarea {
+      width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: #0f1830; color: var(--text);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    .micro { font-size: .82rem; color: var(--muted); }
+    .ok { color: var(--lime); font-size: .9rem; display: none; }
+
+    .faq details {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
+    }
+    .final {
+      text-align: centre; padding: 34px 18px; border: 1px solid var(--border); border-radius: 16px;
+      background: linear-gradient(140deg, rgba(0,229,255,.08), rgba(124,77,255,.12));
+      margin-bottom: 44px;
+    }
+
+    footer { color: var(--muted); font-size: .82rem; padding-bottom: 30px; text-align: centre; }
+
+    @media (max-width: 900px) {
+      .hero, .split { grid-template-columns: 1fr; }
+      .steps, .pricing { grid-template-columns: 1fr; }
+      .trust { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top container">
+    <div class="brand"><span class="dot"></span> AgentStack.im</div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <span class="pill">Isle of Man • OpenClaw Setup Service</span>
+        <h1>Get OpenClaw running for your business in <span class="gradient">48 hours</span>.</h1>
+        <p class="lead">AgentStack.im helps founders and teams launch reliable AI operations fast — with secure setup, practical automations, and a clean handover. Choose <strong>local machine</strong> or <strong>hosted VM</strong>.</p>
+        <div class="cta">
+          <a href="#lead" class="btn btn-primary">Book my setup call</a>
+          <a href="#packages" class="btn btn-secondary">See packages</a>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <h3>What you get</h3>
+        <ul class="checks">
+          <li>OpenClaw installation and hardening</li>
+          <li>Workflow automation tailored to your business</li>
+          <li>Lead-safe messaging and alert setup</li>
+          <li>Handover documentation in plain English</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="trust">
+      <div>Based in the Isle of Man</div>
+      <div>Security-first setup</div>
+      <div>Fixed setup pricing</div>
+      <div>Optional monthly support</div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <p class="sub">Simple process, no fluff.</p>
+      <div class="steps">
+        <div class="card"><div class="num">01</div><h3>Discovery call</h3><p>15-minute scope call to map your goals, current tools, and constraints.</p></div>
+        <div class="card"><div class="num">02</div><h3>Build and configure</h3><p>Install, configure, and optimise your setup with sensible safeguards.</p></div>
+        <div class="card"><div class="num">03</div><h3>Handover</h3><p>Walkthrough, runbook, and next-step recommendations for your team.</p></div>
+      </div>
+    </section>
+
+    <section id="packages">
+      <h2>Setup packages</h2>
+      <p class="sub">One-off setup fees. Optional monthly retainer afterwards.</p>
+      <div class="pricing">
+        <article class="card">
+          <h3>Local machine setup</h3>
+          <div class="price">£699</div>
+          <p>Ideal for solo founders who want OpenClaw on their own laptop or desktop.</p>
+        </article>
+        <article class="card" style="outline:2px solid rgba(0,229,255,.35)">
+          <span class="tag">Most popular</span>
+          <h3>Hosted VM setup</h3>
+          <div class="price">£999</div>
+          <p>Best for uptime and team continuity. Hosted environment with secure access and handover.</p>
+        </article>
+        <article class="card">
+          <h3>Team setup (up to 5 users)</h3>
+          <div class="price">£1,299</div>
+          <p>Includes shared workflows, role-appropriate controls, and practical team onboarding.</p>
+        </article>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Optional monthly retainer</h3>
+        <p><strong>Lite £149/month:</strong> monitoring, updates, monthly check-in<br>
+        <strong>Pro £299/month:</strong> priority support, automation improvements, quarterly optimisation review</p>
+      </div>
+    </section>
+
+    <section id="lead" class="split">
+      <div class="card">
+        <h2>Get your setup plan</h2>
+        <p class="sub">Tell us what you need. We reply within one business day.</p>
+        <form id="leadForm">
+          <div><label for="name">Name</label><input id="name" required></div>
+          <div><label for="email">Business email</label><input id="email" type="email" required></div>
+          <div><label for="company">Business name</label><input id="company" required></div>
+          <div>
+            <label for="pref">Preferred setup</label>
+            <select id="pref" required>
+              <option value="">Select one…</option>
+              <option>Local machine</option>
+              <option>Hosted VM</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div><label for="goal">Biggest goal</label><textarea id="goal" placeholder="Example: automate support triage and daily reporting"></textarea></div>
+          <button class="btn btn-primary" type="submit">Get my setup plan</button>
+          <div class="micro">No spam. UK English support. Practical answers only.</div>
+          <div class="ok" id="okMsg">Thanks — your details are captured. We will be in touch shortly.</div>
+        </form>
+      </div>
+      <div>
+        <div class="card faq">
+          <h2>FAQs</h2>
+          <details><summary>What is the difference between local and hosted VM?</summary><p>Local runs on your own machine for direct control. Hosted VM runs in the cloud for easier uptime, remote access, and team continuity.</p></details>
+          <details><summary>Do I keep control of credentials and data?</summary><p>Yes. You retain ownership of your credentials and data. We use least-privilege setup and document everything.</p></details>
+          <details><summary>Can you migrate existing workflows?</summary><p>Yes. We can map current processes into OpenClaw workflows and reduce manual overhead.</p></details>
+          <details><summary>What happens after setup?</summary><p>You can run independently, or choose a monthly retainer for monitoring, updates, and optimisation.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <h2>Ready to ship faster with OpenClaw?</h2>
+      <p>Book your setup and get a production-ready environment in 48 hours.</p>
+      <a href="#lead" class="btn btn-primary">Book my setup call</a>
+    </section>
+  </main>
+
+  <footer>
+    © AgentStack.im • Isle of Man • OpenClaw setup service
+  </footer>
+
+  <script>
+    const form = document.getElementById('leadForm');
+    const ok = document.getElementById('okMsg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      ok.style.display = 'none';
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        company: document.getElementById('company').value.trim(),
+        preferredSetup: document.getElementById('pref').value,
+        goal: document.getElementById('goal').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Submit failed');
+
+        ok.style.display = 'block';
+        form.reset();
+      } catch (_err) {
+        alert('Sorry, something went wrong. Please try again or email hello@agentstack.im');
+      }
+    });
+  </script>
+</body>
+</html>

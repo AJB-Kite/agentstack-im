@@ -1,0 +1,13 @@
+{
+  "name": "agentstack-im",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AgentStack.im landing page with lead capture API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
