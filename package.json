@@ -1,13 +1,9 @@
 {
   "name": "agentstack-im",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "AgentStack.im landing page with lead capture API",
-  "main": "server.js",
+  "description": "AgentStack.im landing page with Supabase lead capture",
   "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.19.2"
+    "start": "npx vercel dev"
   }
 }

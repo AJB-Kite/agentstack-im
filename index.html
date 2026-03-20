@@ -106,6 +106,7 @@
       .trust { grid-template-columns: 1fr 1fr; }
     }
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <header class="top container">
@@ -197,6 +198,16 @@
             </select>
           </div>
           <div><label for="goal">Biggest goal</label><textarea id="goal" placeholder="Example: automate support triage and daily reporting"></textarea></div>
+
+          <input id="website" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true" />
+
+          <label style="display:flex;gap:8px;align-items:flex-start;">
+            <input id="consent" type="checkbox" required style="width:auto;margin-top:2px;" />
+            <span>I agree to be contacted about my enquiry and understand my data will be used for lead response.</span>
+          </label>
+
+          <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__"></div>
+
           <button class="btn btn-primary" type="submit">Get my setup plan</button>
           <div class="micro">No spam. UK English support. Practical answers only.</div>
           <div class="ok" id="okMsg">Thanks — your details are captured. We will be in touch shortly.</div>
@@ -227,20 +238,26 @@
   <script>
     const form = document.getElementById('leadForm');
     const ok = document.getElementById('okMsg');
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       ok.style.display = 'none';
+
+      const turnstileToken = window.turnstile?.getResponse?.() || '';
 
       const payload = {
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         company: document.getElementById('company').value.trim(),
         preferredSetup: document.getElementById('pref').value,
-        goal: document.getElementById('goal').value.trim()
+        goal: document.getElementById('goal').value.trim(),
+        website: document.getElementById('website').value,
+        consent: document.getElementById('consent').checked,
+        turnstileToken
       };
 
       try {
-        const res = await fetch('/api/leads', {
+        const res = await fetch('/api/lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -250,6 +267,7 @@
 
         ok.style.display = 'block';
         form.reset();
+        window.turnstile?.reset?.();
       } catch (_err) {
         alert('Sorry, something went wrong. Please try again or email hello@agentstack.im');
       }
