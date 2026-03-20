@@ -1,0 +1,35 @@
+# AgentStack.im
+
+AgentStack.im provides OpenClaw setup services for Isle of Man businesses.
+
+## Core offer
+- OpenClaw setup in 48 hours
+- Local machine setup
+- Hosted VM setup
+- Team setup and handover documentation
+
+## Pricing (GBP)
+- Local machine setup: £699
+- Hosted VM setup: £999
+- Team setup (up to 5 users): £1,299
+- Optional monthly retainer: Lite £149/month, Pro £299/month
+
+## Ideal customers
+- Founders and small teams adopting OpenClaw
+- Businesses needing practical AI operations setup and workflow automation
+
+## Lead capture
+- Primary call to action: Book setup call
+- Lead form fields: name, business email, business name, preferred setup, biggest goal
+
+## Trust and delivery
+- Isle of Man-focused service
+- Security-first setup
+- Clear fixed pricing
+- Optional ongoing support
+
+## Canonical page
+- https://agentstack.im/
+
+## Contact route
+- Website lead form (preferred)
